@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seminário de Cirurgia</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f6f8;
+  color: #263442;
+}
+header {
+  background: #12364a;
+  color: white;
+  padding: 28px 20px;
+  text-align: center;
+}
+header h1 { font-size: 27px; margin-bottom: 10px; }
+header p { color: #d6e3e9; }
+nav {
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px;
+  box-shadow: 0 2px 8px #0001;
+}
+nav a {
+  color: #12364a;
+  text-decoration: none;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.hero {
+  background: linear-gradient(135deg,#12364a,#28627a);
+  color: white;
+  padding: 75px 20px;
+  text-align: center;
+}
+.hero h2 { font-size: 34px; margin-bottom: 15px; }
+.hero p { font-size: 17px; line-height: 1.6; }
+.container {
+  max-width: 1050px;
+  margin: auto;
+  padding: 35px 18px;
+}
+section { margin-bottom: 35px; }
+h2.section-title {
+  color: #12364a;
+  margin-bottom: 18px;
+  font-size: 24px;
+}
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 3px 12px #0000000b;
+}
+.card h3 { color: #20566c; margin-bottom: 9px; }
+.card p { line-height: 1.6; color: #596875; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 15px;
+}
+.info {
+  text-align: center;
+  padding: 24px 12px;
+}
+.info strong {
+  display: block;
+  color: #20566c;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+footer {
+  background: #12364a;
+  color: white;
+  padding: 28px 15px;
+  text-align: center;
+  line-height: 1.8;
+}
+@media(max-width:600px) {
+  .hero h2 { font-size: 27px; }
+  header h1 { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1 id="nome">Seminário de Cirurgia</h1>
+  <p id="subtitulo">Conhecimento, atualização e excelência cirúrgica</p>
+</header>
+
+<nav>
+  <a href="#inicio">Início</a>
+  <a href="#sobre">Sobre</a>
+  <a href="#programacao">Programação</a>
+  <a href="#palestrantes">Palestrantes</a>
+  <a href="#local">Local</a>
+</nav>
+
+<div class="hero" id="inicio">
+  <h2>Seminário de Cirurgia</h2>
+  <p>Um encontro dedicado à ciência, à prática e à inovação na cirurgia.</p>
+</div>
+
+<main class="container">
+
+  <section id="sobre">
+    <h2 class="section-title">Sobre o evento</h2>
+    <div class="card">
+      <p>Bem-vindo ao Seminário de Cirurgia. Um espaço para compartilhar conhecimento, discutir casos clínicos e promover a atualização científica na área cirúrgica.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Informações do evento</h2>
+    <div class="grid">
+      <div class="card info">
+        <strong>Data</strong>
+        <p>A definir</p>
+      </div>
+      <div class="card info">
+        <strong>Horário</strong>
+        <p>A definir</p>
+      </div>
+      <div class="card info">
+        <strong>Local</strong>
+        <p>A definir</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="programacao">
+    <h2 class="section-title">Programação</h2>
+    <div class="card">
+      <h3>Programação científica</h3>
+      <p>Em breve, disponibilizaremos os horários, temas das apresentações e atividades do seminário.</p>
+    </div>
+  </section>
+
+  <section id="palestrantes">
+    <h2 class="section-title">Palestrantes</h2>
+    <div class="card">
+      <h3>Convidados especiais</h3>
+      <p>Em breve, serão apresentados os palestrantes e suas respectivas qualificações.</p>
+    </div>
+  </section>
+
+  <section id="local">
+    <h2 class="section-title">Localização</h2>
+    <div class="card">
+      <p>As informações sobre o local de realização do evento serão divulgadas em breve.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>Seminário de Cirurgia</strong>
+  <p>Conhecimento e excelência em cirurgia.</p>
+  <p>© 2026 - Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
