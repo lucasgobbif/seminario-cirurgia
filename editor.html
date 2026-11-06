@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor Visual | Seminário de Cirurgia</title>
+
+  <link href="https://unpkg.com/grapesjs/dist/css/grapes.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/grapesjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f3f5;
+    }
+    header {
+      min-height: 58px;
+      padding: 10px 16px;
+      background: #172b3a;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    header strong { font-size: 16px; }
+    button {
+      border: 0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .save { background: #23865b; color: white; }
+    .login { background: white; color: #172b3a; }
+    #auth {
+      padding: 12px;
+      background: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    #auth input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      min-width: 180px;
+    }
+    #status {
+      font-size: 13px;
+      color: #555;
+      padding: 8px 14px;
+      background: white;
+    }
+    #editor { height: calc(100vh - 145px); }
+    @media(max-width: 600px) {
+      #editor { height: calc(100vh - 190px); }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <strong>Editor Visual — Seminário de Cirurgia</strong>
+  <button class="save" id="save">Salvar alterações</button>
+</header>
+
+<div id="auth">
+  <input id="email" type="email" placeholder="Seu e-mail">
+  <input id="password" type="password" placeholder="Sua senha">
+  <button class="login" id="signin">Entrar</button>
+  <button class="login" id="signup">Criar conta</button>
+  <button class="login" id="logout">Sair</button>
+</div>
+
+<div id="status">Configure o Supabase para começar.</div>
+
+<div id="editor"></div>
+
+<script>
+  // COLOQUE AQUI OS DADOS DO SEU PROJETO SUPABASE
+  const SUPABASE_URL = "https://mvmvhxrzbflgaplavmdo.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_yR8nnZ8SfGcwr1Dx7LUpmw_hqbAmL9B";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const status = document.getElementById("status");
+
+  const editor = grapesjs.init({
+    container: "#editor",
+    height: "100%",
+    width: "auto",
+    storageManager: false,
+    deviceManager: {
+      devices: [
+        { name: "Computador", width: "" },
+        { name: "Tablet", width: "768px" },
+        { name: "Celular", width: "375px" }
+      ]
+    },
+    blockManager: {
+      appendTo: "#blocks"
+    },
+    panels: {
+      defaults: [
+        {
+          id: "devices",
+          buttons: [
+            { id: "desktop", label: "PC", command: "set-device-desktop", active: true },
+            { id: "tablet", label: "Tablet", command: "set-device-tablet" },
+            { id: "mobile", label: "Celular", command: "set-device-mobile" }
+          ]
+        }
+      ]
+    },
+    plugins: [],
+    canvas: {
+      styles: []
+    },
+    components: `
+      <header style="padding:25px;background:#172b3a;color:white;text-align:center">
+        <h1>Seminário de Cirurgia</h1>
+        <p>Conhecimento, atualização e excelência cirúrgica</p>
+      </header>
+      <nav style="padding:15px;text-align:center;background:#e9edf0">
+        <a href="#inicio">Início</a> |
+        <a href="#sobre">Sobre</a> |
+        <a href="#programacao">Programação</a> |
+        <a href="#palestrantes">Palestrantes</a> |
+        <a href="#local">Local</a>
+      </nav>
+      <section id="inicio" style="padding:65px 20px;text-align:center">
+        <h1>Seminário de Cirurgia</h1>
+        <p>Um encontro de conhecimento e atualização em cirurgia.</p>
+      </section>
+      <section id="sobre" style="padding:45px 20px;background:#f1f3f5">
+        <h2>Sobre o evento</h2>
+        <p>Adicione aqui as informações do seminário.</p>
+      </section>
+      <section id="programacao" style="padding:45px 20px">
+        <h2>Programação</h2>
+        <p>Adicione a programação do evento.</p>
+      </section>
+      <section id="palestrantes" style="padding:45px 20px;background:#f1f3f5">
+        <h2>Palestrantes</h2>
+        <p>Adicione os palestrantes.</p>
+      </section>
+      <section id="local" style="padding:45px 20px">
+        <h2>Localização</h2>
+        <p>Adicione o endereço do evento.</p>
+      </section>
+      <footer style="padding:25px;background:#172b3a;color:white;text-align:center">
+        Seminário de Cirurgia
+      </footer>
+    `,
+    blockManager: {
+      appendTo: ".gjs-pn-views"
+    }
+  });
+
+  editor.BlockManager.add("section", {
+    label: "Nova seção",
+    category: "Estrutura",
+    content: "<section style='padding:40px'><h2>Nova seção</h2><p>Escreva aqui.</p></section>"
+  });
+
+  editor.BlockManager.add("image", {
+    label: "Imagem",
+    category: "Elementos",
+    content: { type: "image" }
+  });
+
+  editor.BlockManager.add("text", {
+    label: "Texto",
+    category: "Elementos",
+    content: "<p>Digite seu texto aqui</p>"
+  });
+
+  editor.BlockManager.add("button", {
+    label: "Botão",
+    category: "Elementos",
+    content: "<button style='padding:12px 22px;background:#172b3a;color:white;border:0;border-radius:6px'>Clique aqui</button>"
+  });
+
+  editor.Commands.add("set-device-desktop", {
+    run: ed => ed.setDevice("Computador")
+  });
+  editor.Commands.add("set-device-tablet", {
+    run: ed => ed.setDevice("Tablet")
+  });
+  editor.Commands.add("set-device-mobile", {
+    run: ed => ed.setDevice("Celular")
+  });
+
+  document.getElementById("signup").onclick = async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const { error } = await supabaseClient.auth.signUp({ email, password });
+    status.textContent = error ? error.message : "Cadastro solicitado. Verifique seu e-mail se necessário.";
+  };
+
+  document.getElementById("signin").onclick = async () => {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    status.textContent = error ? error.message : "Login realizado.";
+  };
+
+  document.getElementById("logout").onclick = async () => {
+    await supabaseClient.auth.signOut();
+    status.textContent = "Você saiu da sua conta.";
+  };
+
+  document.getElementById("save").onclick = async () => {
+    const { data: sessionData } = await supabaseClient.auth.getSession();
+
+    if (!sessionData.session) {
+      status.textContent = "Entre na sua conta antes de salvar.";
+      return;
+    }
+
+    const project = editor.getProjectData();
+
+    const { error } = await supabaseClient
+      .from("site_pages")
+      .upsert({
+        id: "principal",
+        content: project,
+        updated_at: new Date().toISOString()
+      });
+
+    status.textContent = error
+      ? "Erro ao salvar: " + error.message
+      : "Projeto salvo no Supabase!";
+  };
+
+  async function loadProject() {
+    const { data, error } = await supabaseClient
+      .from("site_pages")
+      .select("content")
+      .eq("id", "principal")
+      .maybeSingle();
+
+    if (data && data.content) {
+      editor.loadProjectData(data.content);
+      status.textContent = "Projeto carregado.";
+    } else if (error) {
+      status.textContent = "Editor aberto. Ainda não foi carregado um projeto salvo.";
+    } else {
+      status.textContent = "Editor pronto para edição.";
+    }
+  }
+
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (session) loadProject();
+  });
+
+  status.textContent = "Editor visual carregado. Entre na sua conta para salvar.";
+</script>
+
+</body>
+</html>
